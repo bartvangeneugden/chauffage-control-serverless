@@ -1,0 +1,14 @@
+{
+  "name": "chauffage-control-serverless",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "repository": "https://www.github.com/bartvangeneugden/chauffage-control-serverless",
+  "author": "Bart Vangeneugden",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^22.1.1"
+  }
+}

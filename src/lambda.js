@@ -4,6 +4,7 @@ AWS.config.apiVersions = {
 };
 
 const dynamoApi = new AWS.DynamoDB();
+const s3Api = new AWS.S3();
 
 const DYNAMO_DB_TABLE = "datastore"
 const CHAUFFAGE_TOPIC = "chauffage"

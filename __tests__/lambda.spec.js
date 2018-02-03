@@ -21,6 +21,12 @@ function mockDynamoApi(options) {
   }
 }
 
+function mockS3Api() {
+  return {
+    
+  }
+}
+
 describe('The lambda to retrieve configuration', () => {
   it('Should succeed with data if the dynamo retrieve was a success', (done) => {
 
@@ -53,7 +59,7 @@ describe('The lambda to save configuration', () => {
       done();
     }
 
-    lambda.saveConfig({config: 'hello'}, null, callback, mockDynamoApi({success: true}), {})
+    lambda.saveConfig({config: 'hello'}, null, callback, mockDynamoApi({success: true}), mockS3Api())
   })
 
   it('Should return with an error if dynamo put did not respond successfully', (done) => {
@@ -63,6 +69,6 @@ describe('The lambda to save configuration', () => {
       done();
     }
 
-    lambda.saveConfig({config: 'hello'}, null, callback, mockDynamoApi({success: false}), {})
+    lambda.saveConfig({config: 'hello'}, null, callback, mockDynamoApi({success: false}), mockS3Api())
   })
 })

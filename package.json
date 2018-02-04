@@ -12,6 +12,10 @@
     "jest": "^22.1.1"
   },
   "dependencies": {
-    "aws-sdk": "^2.183.0"
+    "aws-sdk": "^2.183.0",
+    "yamljs": "^0.3.0"
+  },
+  "jest": {
+    "collectCoverage": true
   }
 }

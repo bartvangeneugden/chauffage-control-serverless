@@ -4,18 +4,30 @@ const DEFAULT_PUT_DATA = "PUT_WAS_GOOD"
 
 function mockDynamoApi(options) {
   return {
-    getItem: (params, callback) => {
-      if(options.success) {
-        callback(null, {payload: DEFAULT_GET_DATA})
-      } else {
-        callback('Bad stuff happened')
+    getItem: (params) => {
+      return { 
+        promise: () => {
+          return new Promise((resolve, reject) => {
+            if(options.success) {
+              resolve({payload: DEFAULT_GET_DATA})
+            } else {
+              reject('Bad stuff happened!')
+            }
+          });
+        }
       }
     },
-    putItem: (params, callback) => {
-      if(options.success) {
-        callback(null, {payload: DEFAULT_PUT_DATA})
-      } else {
-        callback('Bad stuff happened')
+    putItem: (params) => {
+      return {
+        promise: () => {
+          return new Promise((resolve, reject) => {
+            if(options.success) {
+              resolve({payload: DEFAULT_PUT_DATA})
+            } else {
+              reject('Bad stuff happened')
+            }
+          });
+        }
       }
     }
   }
@@ -23,7 +35,9 @@ function mockDynamoApi(options) {
 
 function mockS3Api() {
   return {
-    
+    putItem: (params) => { return new Promise((resolve, reject) => {
+      resolve(params);
+    }); }
   }
 }
 

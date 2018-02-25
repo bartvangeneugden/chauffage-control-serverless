@@ -20,7 +20,7 @@ exports.getConfig = (event, context, callback, dynamo = dynamoApi) => {
   });
 }
 
-exports.saveConfig = (event, context, callback, dynamo = dynamoApi, s3 = s3Api) => {
+exports.saveConfig = (event, context, callback, dynamo = dynamoApi, s3 = s3Api, currentTimestamp = Date.now) => {
   const dynamoDBParams = {
     TableName: DYNAMO_DB_TABLE,
     Key: {
@@ -34,11 +34,26 @@ exports.saveConfig = (event, context, callback, dynamo = dynamoApi, s3 = s3Api) 
   }
 
   dynamo.putItem(dynamoDBParams).promise().then( data => {
-    return s3.putItem({  });
+    return s3.putObject({
+      Body: Buffer.from(JSON.stringify(
+        getCurrentStateForConfig(event.config, currentTimestamp))),
+      Bucket: "examplebucket"
+    });
   }).then( data => {
     callback(null, data.payload);
   }).catch (err => {
     console.log(err, "Error saving config");
     callback("Error saving config");
   });
+}
+
+function getCurrentStateForConfig(configToSave, currentTimestamp) {
+  return configToSave.map(relay => {
+    if(relay.function == "timer" && currentTimestamp > relay.timerEnds) {
+      relay.status = "off";
+    }
+    return relay;
+  }).map(relay => {
+		return {id: relay.id, on: relay.status!="off"};
+	})
 }

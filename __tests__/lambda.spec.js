@@ -5,7 +5,7 @@ const DEFAULT_PUT_DATA = "PUT_WAS_GOOD"
 function mockDynamoApi(options) {
   return {
     getItem: (params) => {
-      return { 
+      return {
         promise: () => {
           return new Promise((resolve, reject) => {
             if(options.success) {
@@ -36,7 +36,7 @@ function mockDynamoApi(options) {
 function mockS3Api() {
   return {
     putItem: (params) => { return new Promise((resolve, reject) => {
-      resolve(params);
+      resolve({payload: DEFAULT_PUT_DATA});
     }); }
   }
 }

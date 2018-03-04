@@ -1,5 +1,6 @@
-const config = require('./config');
 const AWS = require('aws-sdk');
+const config = require('../config/');
+
 AWS.config.apiVersions = {
   dynamodb: '2012-08-10'
 };

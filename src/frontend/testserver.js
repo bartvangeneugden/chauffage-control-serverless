@@ -4,8 +4,12 @@ var app = express();
 var path = require('path');
 
 app.use('/build', express.static('build'));
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '/index.html'));
+});
+
+app.get('/api/config.json', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../__tests__/mockConfig.json'));
 });
 
 app.listen(8080);

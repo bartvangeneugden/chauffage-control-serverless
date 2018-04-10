@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import axios from 'axios';
 import ControlList from './control-list.jsx'
 import ConfigList from './config-list.jsx'
-import { BrowserRouter as Router, Route, Link} from 'react-router-dom'
+import { HashRouter as Router, Route, Link} from 'react-router-dom'
 
 class App extends React.Component {
   constructor(props) {

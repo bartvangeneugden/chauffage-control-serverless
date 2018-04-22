@@ -8,8 +8,8 @@ AWS.config.apiVersions = {
 const dynamoApi = new AWS.DynamoDB();
 const s3Api = new AWS.S3();
 
-const DYNAMO_DB_TABLE = "datastore"
-const CHAUFFAGE_TOPIC = "chauffage"
+const DYNAMO_DB_TABLE = "datastore";
+const CHAUFFAGE_TOPIC = "chauffage";
 
 exports.getConfig = (event, context, callback, dynamo = dynamoApi) => {
   dynamo.getItem({TableName: DYNAMO_DB_TABLE, Key: { topic: CHAUFFAGE_TOPIC }})
@@ -19,7 +19,7 @@ exports.getConfig = (event, context, callback, dynamo = dynamoApi) => {
     console.log(err, "Error retrieving config");
     callback("Error retrieving config");
   });
-}
+};
 
 exports.saveConfig = (event, context, callback, dynamo = dynamoApi, s3 = s3Api, currentTimestamp = Date.now) => {
   const dynamoDBParams = {
@@ -32,7 +32,7 @@ exports.saveConfig = (event, context, callback, dynamo = dynamoApi, s3 = s3Api, 
   const s3Params = {
     Body: Buffer.from(event.config),
     Bucket: config.bucket,
-  }
+  };
 
   dynamo.putItem(dynamoDBParams).promise().then( data => {
     return s3.putObject({
@@ -46,7 +46,7 @@ exports.saveConfig = (event, context, callback, dynamo = dynamoApi, s3 = s3Api, 
     console.log(err, "Error saving config");
     callback("Error saving config");
   });
-}
+};
 
 function getCurrentStateForConfig(configToSave, currentTimestamp) {
   return configToSave.map(relay => {

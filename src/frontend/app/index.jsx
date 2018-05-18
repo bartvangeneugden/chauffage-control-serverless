@@ -14,7 +14,7 @@ class App extends React.Component {
     super(props);
     this.state = { config: [], loading: false };
     this.configChanged = this.configChanged.bind(this);
-    this.saveConfig = this.saveConfig.bind(this);
+    this.saveState = this.saveState.bind(this);
   }
 
   render () {
@@ -36,7 +36,7 @@ class App extends React.Component {
         <Route exact path="/" render={(routeProps) =>
             (<ControlList {...routeProps} {...this.state} onChange={this.controlChanged} />)} />
         <Route path="/config" render={(routeProps) =>
-            (<ConfigList config={this.state.config} onChange={this.configChanged} />)} />
+            (<ConfigList config={this.state.config} onChange={this.configChanged} onSaveClicked={this.saveState} />)} />
       </div>
     </Router>;
   }
@@ -47,18 +47,18 @@ class App extends React.Component {
           return config;
       });
       this.setState({config: newConfig});
-      this.saveConfig(state);
+      this.saveState();
   }
 
   configChanged(newConfig) {
     this.setState({config: newConfig});
-    this.saveConfig(newConfig);
   }
 
-  saveConfig(newConfig) {
-    axios.post(`${CONFIG.api_url}/api/config.json`)
+  saveState() {
+    return axios.post(`${CONFIG.api_url}/api/config.json`, {config: this.state})
         .then((result) => {
             this.setState({
+                loading: false,
                 config: result.data
             });
         }).catch(() => {

@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage",
-    "build-frontend": "webpack -p"
+    "build-frontend": "webpack -d"
   },
   "repository": "https://www.github.com/bartvangeneugden/chauffage-control-serverless",
   "author": "Bart Vangeneugden",

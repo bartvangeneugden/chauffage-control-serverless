@@ -14,6 +14,7 @@ class App extends React.Component {
     super(props);
     this.state = { config: [], loading: false };
     this.configChanged = this.configChanged.bind(this);
+    this.controlChanged = this.controlChanged.bind(this);
     this.saveState = this.saveState.bind(this);
   }
 
@@ -43,8 +44,10 @@ class App extends React.Component {
 
   controlChanged(id, newState) {
       const newConfig = this.state.config.map((config) => {
+        if (config.id === id) {
           config.status = (newState ? "on" : "off");
-          return config;
+        }
+        return config;
       });
       this.setState({config: newConfig});
       this.saveState();

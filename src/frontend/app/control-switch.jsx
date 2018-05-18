@@ -10,9 +10,9 @@ export default class ControlSwitch extends React.Component {
 
   render() {
     if (this.props.turnedOn) {
-      return <Button bsStyle="danger">Switch off</Button>;
+      return <Button bsStyle="danger" onClick={this.toggle}>Switch off</Button>;
     } else {
-      return <Button bsStyle="success">Switch on</Button>;
+      return <Button bsStyle="success" onClick={this.toggle}>Switch on</Button>;
     }
   }
 

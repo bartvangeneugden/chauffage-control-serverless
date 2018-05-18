@@ -34,11 +34,20 @@ class App extends React.Component {
           </Panel.Body>
         </Panel>
         <Route exact path="/" render={(routeProps) =>
-            (<ControlList {...routeProps} {...this.state} />)} />
+            (<ControlList {...routeProps} {...this.state} onChange={this.controlChanged} />)} />
         <Route path="/config" render={(routeProps) =>
             (<ConfigList config={this.state.config} onChange={this.configChanged} />)} />
       </div>
     </Router>;
+  }
+
+  controlChanged(id, newState) {
+      const newConfig = this.state.config.map((config) => {
+          config.status = (newState ? "on" : "off");
+          return config;
+      });
+      this.setState({config: newConfig});
+      this.saveConfig(state);
   }
 
   configChanged(newConfig) {

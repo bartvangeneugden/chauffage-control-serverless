@@ -25,10 +25,10 @@ export default class Control extends React.Component {
               <Col xs={12} md={10}>
                 {this.props.config.title}
                 <span> - </span>
-                <ControlStatus turnedOn={this.isControlTurnedOn()} timeLeft={this.state.timeLeft} />
+                <ControlStatus onChange={this.props.onChange} turnedOn={this.isControlTurnedOn()} timeLeft={this.state.timeLeft} />
               </Col>
               <Col xs={12} md={2}>
-                <ControlSwitch turnedOn={this.isControlTurnedOn()} />
+                <ControlSwitch onChange={this.props.onChange} turnedOn={this.isControlTurnedOn()} />
               </Col>
             </Row>
           </Grid>

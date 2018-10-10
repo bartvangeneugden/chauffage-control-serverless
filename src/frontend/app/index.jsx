@@ -47,6 +47,9 @@ class App extends React.Component {
         if (config.id === id) {
           config.status = (newState ? "on" : "off");
         }
+        if (config.function === "timer") {
+          config.timerEnds = Date.now() + (config.timer * 60000);
+        }
         return config;
       });
       this.setState({config: newConfig});
@@ -58,7 +61,7 @@ class App extends React.Component {
   }
 
   saveState() {
-    return axios.post(`${CONFIG.api_url}/api/config.json`, {config: this.state})
+    return axios.post(`${CONFIG.api_url}/config`, {config: this.state.config})
         .then((result) => {
             this.setState({
                 loading: false,
@@ -72,7 +75,7 @@ class App extends React.Component {
   componentDidMount() {
     var _this = this;
     this.setState({ loading: true });
-    this.serverRequest = axios.get(`${CONFIG.api_url}/api/config.json`)
+    this.serverRequest = axios.get(`${CONFIG.api_url}/config`)
     .then((result) => {
       _this.setState({
         config: result.data,
@@ -83,9 +86,6 @@ class App extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-    this.serverRequest.abort();
-  }
 }
 
 render(<App/>, document.getElementById('app'));

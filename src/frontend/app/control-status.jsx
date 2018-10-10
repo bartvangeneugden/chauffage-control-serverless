@@ -12,7 +12,7 @@ export default class ControlStatus extends React.Component {
 
   getLabelToShow() {
     if (this.props.turnedOn && this.props.timeLeft > 0) {
-      return `On for ${this.props.timeLeft} min`
+      return `On for ${this.props.timeLeft} sec`
     } else if (this.props.turnedOn) {
       return "On"
     } else {

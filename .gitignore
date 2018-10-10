@@ -2,3 +2,5 @@ node_modules/
 coverage/
 .vscode/
 src/frontend/build/
+*.tf
+.terraform/

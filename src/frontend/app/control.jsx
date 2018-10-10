@@ -11,10 +11,13 @@ export default class Control extends React.Component {
   constructor (props) {
     super(props);
     this.state = {timeLeft: 0};
+    this.isControlTurnedOn = this.isControlTurnedOn.bind(this);
+    this.updateTimer = this.updateTimer.bind(this);
   }
 
   isControlTurnedOn() {
-    return this.props.config.status == "on";
+    return (this.props.config.function === "timer" && this.props.config.timerEnds >= Date.now())
+      || (this.props.config.function !== "timer" && this.props.config.status == "on");
   }
 
   render () {
@@ -37,12 +40,16 @@ export default class Control extends React.Component {
   }
 
   componentDidMount () {
-    this.timeout = setTimeout(() => {
-      this.setState({timeLeft:
-        (this.isControlTurnedOn() && this.props.config.function == "timer") ?
-          Math.floor((this.props.config.timerEnds - Date.now()) / 60000) : 0
-      })
-    }, 1000);
+    this.updateTimer();
+  }
+
+  updateTimer () {
+    if (this.isControlTurnedOn() && this.props.config.function == "timer") {
+      this.setState({timeLeft: Math.floor((this.props.config.timerEnds - Date.now()) / 1000)});
+    } else {
+      this.setState({timeLeft: 0});
+    }
+    this.timeout = setTimeout(this.updateTimer, 1000);
   }
 
   componentWillUnmount () {
